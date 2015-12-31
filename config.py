@@ -28,7 +28,7 @@ def oauth_dance():
         config['max_days'] = raw_input('Maximum number of days items should be retained? ').strip()
 
     if not config.get('feed_url'):
-        config['feed_url'] = raw_input('Final S3 url? (example: https://s3.amazonaws.com/tauphi/feed.xml)').strip()
+        config['feed_url'] = raw_input('Final S3 url? (example: https://s3.amazonaws.com/{bucket}/feed.xml)').strip()
 
     if not config.get('api_key'):
         config['api_key'] = raw_input('API key? ').strip()
