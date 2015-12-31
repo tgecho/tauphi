@@ -98,12 +98,18 @@ def timeline_to_feed(config):
             tweet_url = 'https://twitter.com/{}/status/{}'.format(
                 tweet.author.screen_name, tweet.id_str)
 
+            if len(tweet.entities['urls']) == 1:
+                item_url = tweet.entities['urls'][0]['url']
+            else:
+                item_url = tweet_url
+
             feed.add(
+                id=tweet_url,
+                url=item_url,
                 title=title,
                 content=content,
                 content_type='html',
                 author='{} (@{})'.format(author.name, author.screen_name),
-                url=tweet_url,
                 published=tweet.created_at,
                 updated=tweet.created_at,
                 links=[{'href': u['url']} for u in tweet.entities['urls']]
