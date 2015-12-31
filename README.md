@@ -8,6 +8,7 @@ A simple lambda function that creates an atom feed based on links from your Twit
 4. Create a Twitter app at `https://apps.twitter.com/`
 5. Create an S3 bucket to hold the rss feed (`https://console.aws.amazon.com/s3`)
 6. Create an IAM role granting write access to the S3 bucket at `https://console.aws.amazon.com/iam#roles`. Example:
+
 	```
 	{
 	    "Version": "2012-10-17",
@@ -34,6 +35,7 @@ A simple lambda function that creates an atom feed based on links from your Twit
 	    ]
 	}
 	```
+	
 7. Run `python config.py` to create a config file
 8. Run `./make_zip.sh` to create a `lambda.zip` bundle
 9. Create a new lambda function at `https://console.aws.amazon.com/lambda`
