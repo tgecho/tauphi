@@ -35,8 +35,10 @@ def timeline_to_feed(config):
         api_kwargs['cache'] = tweepy.FileCache('.cache', timeout=60 * 5)
 
     api = get_api(config, **api_kwargs)
+    print('Created Twitter API connection')
 
     me = api.me()
+    print("Begin creating feed for {}'s timeline".format(me.screen_name))
 
     feed = AtomFeed(
         title=config.get(
@@ -59,10 +61,15 @@ def timeline_to_feed(config):
 
             item_count += 1
 
+            if item_count % 10 == 0:
+                print('{} items found'.format(item_count))
+
             if config.get('max_items') and item_count > config.get('max_items'):
+                print('Max items ({}) reached'.format(config['max_items']))
                 break
 
             if min_date and tweet.created_at.date() < min_date:
+                print('Max days ({}) reached'.format(config['max_days']))
                 break
 
             title = '@{}: {}'.format(author.screen_name, tweet.text)
@@ -102,17 +109,23 @@ def timeline_to_feed(config):
                 links=[{'href': u['url']} for u in tweet.entities['urls']]
             )
 
-    return unicode(feed)
+    feed_str = unicode(feed)
+
+    print('Feed generated with {} items'.format(item_count))
+    return feed_str
 
 
 def upload_feed(config, feed):
     conn = boto.connect_s3()
     bucket_name, feed_path = urlparse(config['feed_url']).path.strip('/').split('/', 1)
     bucket = conn.get_bucket(bucket_name)
+    print('Connected to S3 bucket')
     key = bucket.new_key(feed_path)
     key.set_contents_from_string(feed)
+    print('Uploaded feed')
     key.content_type = 'application/atom+xml'
     key.set_acl('public-read')
+    print('Metadata set')
 
 
 if __name__ == '__main__':
