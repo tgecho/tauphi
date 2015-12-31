@@ -128,7 +128,15 @@ def upload_feed(config, feed):
     print('Metadata set')
 
 
-if __name__ == '__main__':
+def lambda_handler(event, context):
+    main()
+
+
+def main():
     config = get_config()
     feed = timeline_to_feed(config)
     upload_feed(config, feed)
+
+
+if __name__ == '__main__':
+    main()
