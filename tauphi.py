@@ -30,7 +30,12 @@ IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.gif', '.png'}
 
 
 def timeline_to_feed(config):
-    api = get_api(config, cache=tweepy.FileCache('.cache', timeout=60 * 5))
+    api_kwargs = {}
+    if config.get('cache_dir'):
+        api_kwargs['cache'] = tweepy.FileCache('.cache', timeout=60 * 5)
+
+    api = get_api(config, **api_kwargs)
+
     me = api.me()
 
     feed = AtomFeed(
