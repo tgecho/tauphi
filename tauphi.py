@@ -72,8 +72,8 @@ def timeline_to_feed(config):
                 print('Max days ({}) reached'.format(config['max_days']))
                 break
 
-            title = '@{}: {}'.format(author.screen_name, tweet.text)
-            content = tweet.text
+            title = tweet.text
+            content = '<p>{}</p><p>@{}</p>'.format(tweet.text, author.screen_name)
 
             for url in tweet.entities['urls']:
                 expanded = url['expanded_url']
