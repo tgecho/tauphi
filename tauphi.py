@@ -72,8 +72,21 @@ def timeline_to_feed(config):
                 print('Max days ({}) reached'.format(config['max_days']))
                 break
 
+            tweet_url = 'https://twitter.com/{}/status/{}'.format(
+                tweet.author.screen_name, tweet.id_str)
+
             title = tweet.text
-            content = '<p>{}</p><p>@{}</p>'.format(tweet.text, author.screen_name)
+            content = """
+            <p>{}</p>
+            <p>
+                <a href="{}">@{}</a>
+                (<a href="{}">original</a>)
+            </p>
+            """.format(
+                tweet.text,
+                'https://twitter.com/{}'.format(author.screen_name),
+                author.screen_name,
+                tweet_url)
 
             for url in tweet.entities['urls']:
                 expanded = url['expanded_url']
@@ -94,9 +107,6 @@ def timeline_to_feed(config):
                     if embed == 'photo':
                         content += '<p><img src="{}" /></p>'.format(
                             embed.media_url_https)
-
-            tweet_url = 'https://twitter.com/{}/status/{}'.format(
-                tweet.author.screen_name, tweet.id_str)
 
             if len(tweet.entities['urls']) == 1:
                 item_url = tweet.entities['urls'][0]['url']
