@@ -50,7 +50,7 @@ A simple lambda function that creates an atom feed based on links from your Twit
 
 I'm pretty happy with how it's currently running. I may refine the item output a bit, but functionally speaking everything seems to work fine. Ideally items would follow the Twitter display guidelines a bit more closely, but this would be fighting against the content sanitization employed by most feed readers.
 
-The installation process suffers greatly from the lack of tooling around Lambda. I want to try out [https://github.com/garnaat/kappa](Kappa) or build something around CloudFormation to streamline the .zip/function/role/event source dance that must be done to get things in place. This is the biggest area for improvement.
+The installation process suffers greatly from the lack of tooling around Lambda. I want to try out [Kappa](https://github.com/garnaat/kappa) or build something around CloudFormation to streamline the .zip/function/role/event source dance that must be done to get things in place. This is the biggest area for improvement.
 
 
 # Prior Art
